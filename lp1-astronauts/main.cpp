@@ -3,6 +3,12 @@
 
 using namespace std;
 
+enum vooStatus {
+    PLANEJADO,
+    LANCADO,
+    DESTRUIDO,
+};
+
 class Astronauta{
     private:
     string cpf;
@@ -30,6 +36,7 @@ private:
     int codigoVoo;
     bool dispo = true;
     list<string> astronautas;
+    vooStatus status = PLANEJADO;
 
 public:
     Voo(int codigo) : codigoVoo(codigo) {}
@@ -79,6 +86,8 @@ int main(void){
 
         // Armazenar o astronauta em algum lugar, como em uma lista
         // ou realizar outras operações com o objeto astronauta
+        cout << astronauta.getCPF() << " " << astronauta.getNome() << " " << astronauta.getIdade() << ".";
+    
 
         break;
         }
