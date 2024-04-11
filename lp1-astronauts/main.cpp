@@ -8,6 +8,7 @@ class Astronauta{
     string cpf;
     string nome;
     int idade;
+    bool dispo = true;
 
     public:
     Astronauta(const string& cpf, const string& nome, int idade)
@@ -27,6 +28,7 @@ class Astronauta{
 class Voo {
 private:
     int codigoVoo;
+    bool dispo = true;
     list<string> astronautas;
 
 public:
@@ -35,6 +37,8 @@ public:
     void adicionarPassageiro(const Astronauta& astronauta) {
         astronautas.push_back(astronauta.getCPF());
     }
+
+    // Criar método lancarVoo()
 };
 
 
