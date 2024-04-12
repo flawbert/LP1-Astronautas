@@ -55,7 +55,7 @@ public:
     // Criar método lancarVoo()
     void lancarVoo() {
         srand(time(nullptr));
-        int numAleatorio = rand() % 2; // Número entre 1 e 0 para que seja aleatória a destruição do voo, e não voluntária
+        int numAleatorio = rand() % 2; // Número entre 1 e 0 para que seja aleatória a destruição do voo ou seu sucesso
 
         if (numAleatorio == 0) {
             status = DESTRUIDO; // Status do Voo ao ser distruido
