@@ -12,12 +12,18 @@ enum vooStatus {
     EMVOO,
 };
 
+enum astroStatus{
+    VIVO,
+    MORTO,
+};
+
 class Astronauta {
 private:
     string cpf;
     string nome;
     int idade;
     bool dispo = true;
+    astroStatus status = VIVO;
     list<int> historicoVoos;
 
 public:
@@ -34,6 +40,10 @@ public:
 
     int getIdade() const {
         return idade;
+    }
+
+    astroStatus getStatus() const {
+        return status;
     }
 
     void setDisponibilidade(bool disponivel) {
@@ -79,20 +89,34 @@ public:
         passageiros.push_back(astronauta); // Adicionar o astronauta á lista de passageiros
     }
 
-    void lancarVoo() {
+    void lancarVoo(list<Astronauta>& astronautas) {
         srand(time(nullptr));
         int numAleatorio = rand() % 2; // Número entre 1 e 0 para que seja aleatória a destruição do voo ou seu sucesso
 
         if (numAleatorio == 0) {
             status = DESTRUIDO;
-            dispo = false;
             cout << "O Voo de codigo " << codigoVoo << " foi explodido." << endl; 
+
+/*
+                    // Definir o status dos passageiros como "MORTO"
+            for (auto& astronauta : passageiros) {
+                for (auto& global_astronauta : astronautas) {
+                    if (global_astronauta.getCPF() == astronauta.getCPF()) {
+                        global_astronauta.setStatus(MORTO);
+                        break;
+                    }
+                }
+            }
+        }
+*/
+
         }
         else {
             status = EMVOO;
-            dispo = false;
             cout << "O Voo de codigo " << codigoVoo << " esta em andamento." << endl;
         }
+
+        dispo = false;
     }
 
     void visualizarPassageiros(const list<Astronauta>& astronautas) const {
@@ -137,6 +161,7 @@ int main(void) {
         opcoes.push_back("//       5 - Listar Voos                     //");
         opcoes.push_back("//       6 - Lancar Voo                      //");
         opcoes.push_back("//       7 - Finalizar Voo                   //");
+        opcoes.push_back("//       8 - Mencoes honrosas                //");
         opcoes.push_back("//       0 - Sair                            //");
         opcoes.push_back("///////////////////////////////////////////////");
 
@@ -271,7 +296,7 @@ int main(void) {
                 // Percorrer a lista de voos
                 for (auto it = voos.begin(); it != voos.end(); ++it) { // Passagem por refêrencia
                     if (it->getCodigo() == cod) {
-                        it->lancarVoo(); // Chamar a função lancarVoo() neste voo
+                        it->lancarVoo(astronautas); // Chamar a função lancarVoo() neste voo // rever
                         encontrado = true;
                         break;
                     }
@@ -306,6 +331,30 @@ int main(void) {
                     cout << "Voo nao encontrado!" << endl;
                 }
 
+                break;
+            }
+
+            case 8: {
+
+                // Menções Honrosas para os astronautas tiveram os status alterado pela explosao
+                cout << "Menções Honrosas:" << endl;
+                for (const auto& astronauta : astronautas) {
+                    if (astronauta.getStatus() == MORTO) {
+                        cout << "   Nome: " << astronauta.getNome() << endl;
+                        cout << "   CPF: " << astronauta.getCPF() << endl;
+                        cout << "   Histórico de Voos:" << endl;
+                        const auto& historico = astronauta.getHistoricoVoos();
+                        if (!historico.empty()) {
+                            for (const auto& codigoVoo : historico) {
+                                cout << "      Código do Voo: " << codigoVoo << endl;
+                            }
+                        } 
+                        else {
+                            cout << "      Sem histórico de voos." << endl;
+                        }
+                        cout << endl;
+                    }
+                }
                 break;
             }
 
