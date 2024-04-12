@@ -146,12 +146,11 @@ int main(void){
                 bool encontrado = false;
 
                 // Percorrer a lista de voos
-                for (const auto& voo : voos) {
-                    if (voo.getCodigo() == cod) {
-                        // Voo encontrado, chamar a função lancarVoo() neste voo
-                        voo.lancarVoo();
+                for (auto it = voos.begin(); it != voos.end(); ++it) { // Passagem por refêrencia
+                    if (it->getCodigo() == cod) {
+                        it->lancarVoo(); // Chamar a função lancarVoo() neste voo
                         encontrado = true;
-                        break; // Não é necessário continuar procurando
+                        break;
                     }
                 }
 
@@ -164,6 +163,7 @@ int main(void){
 
             default:
                 cout << "Saindo..." << endl;
+                controle = 1;
                 break;
         }
     }
