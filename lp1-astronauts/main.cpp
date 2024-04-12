@@ -89,27 +89,13 @@ public:
         passageiros.push_back(astronauta); // Adicionar o astronauta á lista de passageiros
     }
 
-    void lancarVoo(list<Astronauta>& astronautas) {
+    void lancarVoo() {
         srand(time(nullptr));
         int numAleatorio = rand() % 2; // Número entre 1 e 0 para que seja aleatória a destruição do voo ou seu sucesso
 
         if (numAleatorio == 0) {
             status = DESTRUIDO;
             cout << "O Voo de codigo " << codigoVoo << " foi explodido." << endl; 
-
-/*
-                    // Definir o status dos passageiros como "MORTO"
-            for (auto& astronauta : passageiros) {
-                for (auto& global_astronauta : astronautas) {
-                    if (global_astronauta.getCPF() == astronauta.getCPF()) {
-                        global_astronauta.setStatus(MORTO);
-                        break;
-                    }
-                }
-            }
-        }
-*/
-
         }
         else {
             status = EMVOO;
@@ -296,7 +282,7 @@ int main(void) {
                 // Percorrer a lista de voos
                 for (auto it = voos.begin(); it != voos.end(); ++it) { // Passagem por refêrencia
                     if (it->getCodigo() == cod) {
-                        it->lancarVoo(astronautas); // Chamar a função lancarVoo() neste voo // rever
+                        it->lancarVoo(); // Chamar a função lancarVoo() neste voo
                         encontrado = true;
                         break;
                     }
@@ -336,7 +322,7 @@ int main(void) {
 
             case 8: {
 
-                // Menções Honrosas para os astronautas tiveram os status alterado pela explosao
+                // Menções Honrosas para os astronautas tiveram os status alterados para mortos
                 cout << "Menções Honrosas:" << endl;
                 for (const auto& astronauta : astronautas) {
                     if (astronauta.getStatus() == MORTO) {
