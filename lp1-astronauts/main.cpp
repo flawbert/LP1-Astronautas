@@ -86,9 +86,8 @@ int main(void){
 
         // Armazenar o astronauta em algum lugar, como em uma lista
         // ou realizar outras operações com o objeto astronauta
-        cout << astronauta.getCPF() << " " << astronauta.getNome() << " " << astronauta.getIdade() << ".";
+        cout << astronauta.getCPF() << " " << astronauta.getNome() << " " << astronauta.getIdade() << "." << endl;
     
-
         break;
         }
         
