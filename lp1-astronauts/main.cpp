@@ -7,7 +7,7 @@ using namespace std;
 
 enum vooStatus {
     PLANEJANDO,
-    LANCADO,
+    FINALIZADO,
     DESTRUIDO,
     EMVOO,
 };
@@ -18,6 +18,7 @@ private:
     string nome;
     int idade;
     bool dispo = true;
+    list<int> historicoVoos;
 
 public:
     Astronauta(const string& cpf, const string& nome, int idade)
@@ -26,11 +27,25 @@ public:
     string getCPF() const {
         return cpf;
     }
+
     string getNome() const {
         return nome;
     }
+
     int getIdade() const {
         return idade;
+    }
+
+    void setDisponibilidade(bool disponivel) {
+        dispo = disponivel;
+    }
+
+    void adicionarVoo(int codigoVoo) {
+        historicoVoos.push_back(codigoVoo);
+    }
+
+    const list<int>& getHistoricoVoos() const {
+        return historicoVoos;
     }
 };
 
@@ -50,6 +65,10 @@ public:
 
     vooStatus getStatus() const {
         return status; // Retorna o status do voo (que é privado)
+    }
+
+    void setStatus(vooStatus novoStatus) {
+        status = novoStatus;
     }
 
     bool getDispo() const {
@@ -82,6 +101,20 @@ public:
             cout << "   CPF: " << astronauta.getCPF() << ", Nome: " << astronauta.getNome() << ", Idade: " << astronauta.getIdade() << endl;
         }
     }
+
+    void finalizarVoo() {
+        status = FINALIZADO; // definir o status do voo como planejando novamente
+        dispo = true; // tornar o voo disponível novamente
+
+        // Percorrer a lista de passageiros e tornar a disponibilidade de cada astronauta como true novamente
+        for (auto& astronauta : passageiros) {
+            astronauta.setDisponibilidade(true);
+        }
+
+        // Limpar a lista de passageiros, já que o voo foi finalizado
+        passageiros.clear();
+    }
+
 };
 
 int main(void) {
@@ -92,6 +125,7 @@ int main(void) {
     list<Voo> voos;
 
     while (controle != 1) {
+        cout << endl;
         cout << "Escolha uma opcao:" << endl;
 
         list<string> opcoes;
@@ -102,12 +136,14 @@ int main(void) {
         opcoes.push_back("//       4 - Remover passageiros de um Voo   //");
         opcoes.push_back("//       5 - Listar Voos                     //");
         opcoes.push_back("//       6 - Lancar Voo                      //");
+        opcoes.push_back("//       7 - Finalizar Voo                   //");
         opcoes.push_back("//       0 - Sair                            //");
         opcoes.push_back("///////////////////////////////////////////////");
 
         for (const auto& frase : opcoes) {
             cout << frase << endl;
         }
+        cout << endl;
 
         int op;
         cin >> op;
@@ -135,7 +171,7 @@ int main(void) {
                 cin >> numVoo;
                 
                 Voo novoVoo(numVoo);
-                cout << "O voo com codigo " << novoVoo.getCodigo() << " está em planejamento." << endl;
+                cout << "O voo com codigo " << novoVoo.getCodigo() << " esta em planejamento." << endl;
 
                 voos.push_back(novoVoo); // Armazenando Voo em lista
 
@@ -163,9 +199,10 @@ int main(void) {
                             }
 
                             bool astroFind = false;
-                            for (const auto& astronauta : astronautas) {
+                            for (auto& astronauta : astronautas) {
                                 if (astronauta.getCPF() == cpfAstronauta) {
                                     it->adicionarPassageiro(astronauta); // Adicionar passageiro ao voo encontrado
+                                    astronauta.adicionarVoo(it->getCodigo());
                                     astroFind = true; // Atualizar astroFind
                                     break;
                                 }
@@ -195,15 +232,15 @@ int main(void) {
             case 5: {
                 cout << "Voos cadastrados:" << endl;
 
-                for (const auto& voo : voos) {
-                    cout << "Codigo do Voo: " << voo.getCodigo() << endl;
+                for (const auto& voo : voos) {  // O for percorre a lista de voos cadastrados
+                    cout << "Codigo do Voo: " << voo.getCodigo() << endl;  // imprime as insformações do voo a partir do seu código (funciona como uma key)
                     cout << "   Status do Voo: ";
                     switch (voo.getStatus()) {
                         case PLANEJANDO:
                             cout << "em planejamento" << endl;
                             break;
-                        case LANCADO:
-                            cout << "o voo foi lançado" << endl;
+                        case FINALIZADO:
+                            cout << "o voo foi finalizdo." << endl;
                             break;
                         case DESTRUIDO:
                             cout << "o voo foi explodido" << endl;
@@ -236,6 +273,31 @@ int main(void) {
                     if (it->getCodigo() == cod) {
                         it->lancarVoo(); // Chamar a função lancarVoo() neste voo
                         encontrado = true;
+                        break;
+                    }
+                }
+
+                if (!encontrado) {
+                    cout << "Voo nao encontrado!" << endl;
+                }
+
+                break;
+            }
+            
+            case 7: {
+                int cod;
+                cout << "Digite o codigo do voo a ser finalizado: " << endl;
+                cin >> cod;
+
+                bool encontrado = false;
+
+                // Percorrer a lista de voos
+                for (auto& voo : voos) {
+                    if (voo.getCodigo() == cod) {
+                        voo.finalizarVoo(); // Chamar a função finalizarVoo() neste voo
+                        voo.setStatus(FINALIZADO); // Definir o status do voo como finalizado
+                        encontrado = true;
+                        cout << "Voo finalizado com sucesso!" << endl;
                         break;
                     }
                 }
