@@ -188,7 +188,8 @@ int main(void) {
 
                 Astronauta astronauta(cpf, nome, idade);
                 cout << "Astronauta cadastrado: " << astronauta.getCPF() << " " << astronauta.getNome() << " " << astronauta.getIdade() << "." << endl;
-                astronautas.push_back(astronauta);
+
+                astronautas.push_back(astronauta); // Armazenando astronauta em uma lista
                 break;
             }
             
@@ -244,13 +245,11 @@ int main(void) {
                             }
                         }
                         break; // Sair do loop de voos
-                    }
-                    else if (it->getStatus() == EMVOO) {
-                        cout << "O voo nao esta disponivel para se adicionar passageiros." << endl;
-                    }
-                    else {
-                        cout << "O voo nao existe" << endl;
-                    }
+                        }
+                        else if (it->getCodigo() == cod && it->getStatus() == EMVOO) {
+                            cout << "O voo nao esta disponivel para se adicionar passageiros." << endl;
+                            break;
+                        }
                 }
 
                 if (!encontrado) {
@@ -309,7 +308,7 @@ int main(void) {
                         break;
                     }
                     else if (it->getCodigo() == cod && it->getStatus() == EMVOO) {
-                        cout << "O voo nao ja foi lancado." << endl;
+                        cout << "O voo ja foi lancado." << endl;
                         break;
                     }
                     else if (it->getCodigo() == cod && it->getStatus() == DESTRUIDO) {
