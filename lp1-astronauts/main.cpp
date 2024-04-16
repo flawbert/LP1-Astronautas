@@ -229,6 +229,16 @@ int main(void) {
             }
 
             case 3: {
+                cout << "Voos disponiveis (em planejamento): " << endl;
+
+                for (const auto& voo : voos) {
+                    if (voo.getStatus() == PLANEJANDO) {
+                        cout << "   Voo Cod: " << voo.getCodigo() << endl;
+                    }
+                }
+
+                cout << endl;
+
                 int cod;
                 cout << "Digite o codigo do Voo a ser adicionado Passageiros: ";
                 cin >> cod;
@@ -284,6 +294,16 @@ int main(void) {
             }
 
             case 4: {
+                cout << "Voos disponiveis (em planejamento): " << endl;
+
+                for (const auto& voo : voos) {
+                    if (voo.getStatus() == PLANEJANDO) {
+                        cout << "   Voo Cod: " << voo.getCodigo() << endl;
+                    }
+                }
+
+                cout << endl;
+
                 int cod;
                 cout << "Digite o codigo do voo do qual deseja remover passageiros: ";
                 cin >> cod;
