@@ -1,7 +1,5 @@
 // Falta para fazer:
 // Fazer o case 8 de Menção Honrosa (menciona na tela todos os Astronautas que morreram: nome, histórico de Voos e Voo em que morreu)
-// Fazer a lógica de remover passageiro de voo em PLANEJAMENTO
-// Corrigir o registro de astronautas quando o nome tem mais de uma palavra
 // Refazer a interface gráfica de listar voos, e listar passageiros, igual a verificação de registro de voo e de astronautas
 
 
