@@ -208,7 +208,7 @@ int main(void) {
                 cin >> idade;
 
                 Astronauta astronauta(cpf, nome, idade);
-                cout << "Astronauta cadastrado: " << endl;
+                cout << endl << "Astronauta cadastrado: " << endl;
                 cout << "   CPF: " << astronauta.getCPF() << "." << endl;
                 cout << "   Nome: " <<  astronauta.getNome() << "." << endl;
                 cout << "   Idade: " << astronauta.getIdade() << "." << endl;
@@ -477,22 +477,24 @@ int main(void) {
             }
 
             case 8: {
-                cout << "Astronautas Cadastrados" << endl << endl;
+                cout << "Astronautas Cadastrados:" << endl << endl;
 
-                for (auto& astronauta : astronautas) {
-                    if (astronauta == nullptr) {
-                        cout << "Não há nenhum astronauta cadastrado."
-                    }
-                    else {
+                if (astronautas.empty()) {
+                    cout << "Nao ha astronautas cadastrados." << endl;
+                }
+                else {
+                    for (auto& astronauta : astronautas) {
                         cout << "Nome: " << astronauta.getNome() << endl;
                         cout << "CPF: " << astronauta.getCPF() << endl;
                         cout << "Idade: " << astronauta.getIdade() << endl;
                         if (astronauta.getDisponibilidade()) cout << "Status: Disponivel" << endl;
                         else cout << "Status: Indisponivel" << endl;
+                        cout << endl;
                     }
-                    cout << endl;
                 }
-                
+
+                cout << endl;
+
                 break;
             }
 
