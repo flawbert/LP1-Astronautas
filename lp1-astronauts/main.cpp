@@ -177,7 +177,8 @@ int main(void) {
         opcoes.push_back("//       5 - Listar Voos                     //");
         opcoes.push_back("//       6 - Lancar Voo                      //");
         opcoes.push_back("//       7 - Finalizar Voo                   //");
-        opcoes.push_back("//       8 - Mencoes honrosas                //");
+        opcoes.push_back("//       8 - Listar astronautas              //");
+        opcoes.push_back("//       9 - Mencoes honrosas                //");
         opcoes.push_back("//       0 - Sair                            //");
         opcoes.push_back("///////////////////////////////////////////////");
 
@@ -394,6 +395,17 @@ int main(void) {
             }
 
             case 6: {
+                cout << "Voos disponiveis para lancamento: " << endl;
+
+                for (const auto& voo : voos) {
+                    if (voo.getStatus() == PLANEJANDO) {
+                        cout << "   Voo Cod: " << voo.getCodigo() << endl;
+                    }
+                }
+
+                cout << endl;
+
+
                 int cod;
                 cout << "Digite o codigo do voo a ser lancado: ";
                 cin >> cod;
@@ -425,6 +437,17 @@ int main(void) {
             }
             
             case 7: {
+                cout << "Voos disponiveis para finalizar: " << endl;
+
+                for (const auto& voo : voos) {
+                    if (voo.getStatus() == EMVOO) {
+                        cout << "   Voo Cod: " << voo.getCodigo() << endl;
+                    }
+                }
+
+                cout << endl;
+
+
                 int cod;
                 cout << "Digite o codigo do voo a ser finalizado: " << endl;
                 cin >> cod;
@@ -454,6 +477,27 @@ int main(void) {
             }
 
             case 8: {
+                cout << "Astronautas Cadastrados" << endl << endl;
+
+                for (auto& astronauta : astronautas) {
+                    if (astronauta == nullptr) {
+                        cout << "Não há nenhum astronauta cadastrado."
+                    }
+                    else {
+                        cout << "Nome: " << astronauta.getNome() << endl;
+                        cout << "CPF: " << astronauta.getCPF() << endl;
+                        cout << "Idade: " << astronauta.getIdade() << endl;
+                        if (astronauta.getDisponibilidade()) cout << "Status: Disponivel" << endl;
+                        else cout << "Status: Indisponivel" << endl;
+                    }
+                    cout << endl;
+                }
+                
+                break;
+            }
+
+
+            case 9: {
 
                 // Menções Honrosas para os astronautas tiveram os status alterados para mortos
                 
