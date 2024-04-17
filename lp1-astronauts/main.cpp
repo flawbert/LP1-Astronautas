@@ -158,17 +158,7 @@ public:
 
 };
 
-
-int main(void) {
-    cout << "Bem vindo ao controle de Voo." << endl;
-
-    int controle = 0;
-    list<Astronauta> astronautas;
-    list<Voo> voos;
-
-    while (controle != 1) {
-        cout << endl;
-
+void opcoes() {
         list<string> opcoes;
         opcoes.push_back("///////////////////////////////////////////////");
         opcoes.push_back("//       1 - Cadastrar Astronauta            //");
@@ -189,6 +179,20 @@ int main(void) {
         cout << endl;
         cout << endl;
         cout << endl;
+}
+
+
+int main(void) {
+    cout << "Bem vindo ao controle de Voo." << endl;
+
+    int controle = 0;
+    list<Astronauta> astronautas;
+    list<Voo> voos;
+
+    while (controle != 1) {
+        cout << endl;
+
+        opcoes();
 
         int op;
         cout << "Digite uma opcao: ";
