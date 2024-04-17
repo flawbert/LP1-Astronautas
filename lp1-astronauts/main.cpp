@@ -1,5 +1,5 @@
 // Falta para fazer:
-// Fazer o case 8 de Menção Honrosa (menciona na tela todos os Astronautas que morreram: nome, histórico de Voos e Voo em que morreu)
+// Fazer o case 9 de Menção Honrosa (menciona na tela todos os Astronautas que morreram: nome, histórico de Voos e Voo em que morreu)
 // Refazer a interface gráfica de listar voos, e listar passageiros, igual a verificação de registro de voo e de astronautas
 
 
@@ -209,9 +209,9 @@ int main(void) {
 
                 Astronauta astronauta(cpf, nome, idade);
                 cout << endl << "Astronauta cadastrado: " << endl;
-                cout << "   CPF: " << astronauta.getCPF() << "." << endl;
-                cout << "   Nome: " <<  astronauta.getNome() << "." << endl;
-                cout << "   Idade: " << astronauta.getIdade() << "." << endl;
+                cout << "   CPF: " << astronauta.getCPF() << endl;
+                cout << "   Nome: " <<  astronauta.getNome() << endl;
+                cout << "   Idade: " << astronauta.getIdade() << endl;
 
                 astronautas.push_back(astronauta); // Armazenando astronauta em uma lista
                 break;
@@ -489,6 +489,14 @@ int main(void) {
                         cout << "Idade: " << astronauta.getIdade() << endl;
                         if (astronauta.getDisponibilidade()) cout << "Status: Disponivel" << endl;
                         else cout << "Status: Indisponivel" << endl;
+                        cout << "Ultimo voo cadastrado: ";
+                        if (astronauta.getHistoricoVoos().empty()) {
+                            cout << "O astronauta nao esteve cadastrado em nenhum voo" << endl;
+                        }
+                        else {
+                            cout << astronauta.getHistoricoVoos().back() << endl;
+                        }
+                        
                         cout << endl;
                     }
                 }
