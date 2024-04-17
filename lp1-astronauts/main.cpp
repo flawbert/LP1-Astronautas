@@ -114,6 +114,7 @@ public:
             cout << "O Voo de codigo " << codigoVoo << " foi explodido." << endl; 
             for (auto& astronauta : passageiros) {
                 astronauta.setStatus(MORTO);
+                cout << "O astronauta " << astronauta.getNome() << " morreu..." << endl;
             } 
         }
         else {
