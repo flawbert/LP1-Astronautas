@@ -77,6 +77,27 @@ public:
     }
 };
 
+class Cemiterio {
+private:
+    static list<Astronauta> astronautasMortos;
+
+public:
+    // Construtor para inicializar a lista de astronautas mortos
+    Cemiterio() {
+        astronautasMortos = list<Astronauta>(); // Inicializa a lista vazia
+    }
+
+    static void adicionarMorto(const Astronauta& astronauta) {
+        astronautasMortos.push_back(astronauta);
+    }
+
+    static const list<Astronauta>& getAstronautasMortos() {
+        return astronautasMortos;
+    }
+};
+
+list<Astronauta> Cemiterio::astronautasMortos;
+
 class Voo {
 private:
     int codigoVoo;
@@ -128,11 +149,12 @@ public:
             for (auto& astronauta : passageiros) {
                 astronauta.mataAstro();
                 cout << "O astronauta " << astronauta.getNome() << " morreu..." << endl;
+                Cemiterio::adicionarMorto(astronauta);
             } 
         }
         else {
             status = EMVOO;
-            cout << "O Voo de codigo " << codigoVoo << " esta a caminho de" << destino << endl;
+            cout << "O Voo de codigo " << codigoVoo << " esta a caminho de " << destino << endl;
         }
 
         dispo = false;
@@ -171,8 +193,7 @@ public:
 
         // Marcar todos os passageiros como disponíveis novamente
         for (auto& passageiro : passageiros) {
-            passageiro.setIndisponivel();
-            cout << passageiro.getNome() << " ja esta disponivel para outro voo" << endl;
+            passageiro.setDisponivel();
         }
 
         // Limpar a lista de passageiros, já que o voo foi finalizado
@@ -212,6 +233,7 @@ int main(void) {
     int controle = 0;
     list<Astronauta> astronautas;
     list<Voo> voos;
+    Cemiterio cemiterio;
 
     while (controle != 1) {
         cout << endl;
@@ -294,7 +316,8 @@ int main(void) {
                 }
                 else {
                     cout << "Destino do voo: ";
-                    cin >> destino;
+                    cin.ignore(); // Ignora o caractere de nova linha pendente do cin >> numVoo
+                    getline(cin, destino);
 
                     Voo novoVoo(numVoo, destino);
                     cout << "O voo com codigo " << novoVoo.getCodigo() << " com destino a " << novoVoo.getDestino() <<" ja esta em planejamento." << endl;
@@ -470,7 +493,7 @@ int main(void) {
                         }
 
                         if (voo.getDispo()) cout << "   O voo esta disponivel" << endl;
-                        else cout << "   O voo está indisponivel" << endl;
+                        else cout << "   O voo esta indisponivel" << endl;
 
                         cout << "   Destino do voo: " << voo.getDestino() << endl; // informa o destino do voo
 
@@ -600,19 +623,24 @@ int main(void) {
 
                 // Menções Honrosas para os astronautas tiveram os status alterados para mortos
                 
-                cout << "Mencoes Honrosas a" << endl;
+                cout << "Mencoes Honrosas a" << endl << endl;;
 
-                for (auto& astronauta : astronautas) {
-                    if (astronauta.getStatus() == MORTO) {
-                        cout << "   O astronauta " << astronauta.getNome() << " morreu bravamente." << endl;
-                        cout << "   Aqui está a lista de voos em que ele participou:" << endl;
-                        for (auto& cods : astronauta.getHistoricoVoos()) {
-                            cout << "       Voo " << cods << endl;
-                        }
+                // Acessar a lista de astronautas mortos do cemitério
+                const list<Astronauta>& astronautasMortos = Cemiterio::getAstronautasMortos();
+
+                // Iterar sobre a lista de astronautas mortos e imprimir menções honrosas
+                for (const auto& astronauta : astronautasMortos) {
+                    cout << "   O astronauta " << astronauta.getNome() << " morreu bravamente" << endl;
+                    cout << "   Aqui esta a lista de voos em que ele participou:" << endl;
+                    for (const auto& cods : astronauta.getHistoricoVoos()) {
+                        cout << "       Voo " << cods << endl;
                     }
+                    cout << endl;
                 }
 
-                cout << endl << "Esses foram os herois que morram pela nossa Nacao voando conosco." << endl << endl;
+                cout << endl;
+
+                cout << endl << "Esses foram os herois que deram sua vida voando conosco" << endl << endl;
 
                 break;
             }
