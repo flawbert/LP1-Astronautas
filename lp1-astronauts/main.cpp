@@ -140,8 +140,16 @@ public:
 
     void visualizarPassageiros(const list<Astronauta>& astronautas) const {
         cout << "   Astronautas cadastrados para o voo [" << codigoVoo << "]:" << endl;
+
         for (const auto& astronauta : passageiros) {
-            cout << "   CPF: " << astronauta.getCPF() << ", Nome: " << astronauta.getNome() << ", Idade: " << astronauta.getIdade() << endl;
+            if (passageiros.empty()) {
+                cout << "   Nao ha astronautas cadastrados..." << endl;
+                break;
+            }
+            else {
+                cout << "   CPF: " << astronauta.getCPF() << ", Nome: " << astronauta.getNome() << ", Idade: " << astronauta.getIdade() << endl;
+
+            }
         }
     }
 
@@ -163,7 +171,7 @@ public:
 
         // Marcar todos os passageiros como disponíveis novamente
         for (auto& passageiro : passageiros) {
-            passageiro.setDisponivel();
+            passageiro.setIndisponivel();
             cout << passageiro.getNome() << " ja esta disponivel para outro voo" << endl;
         }
 
