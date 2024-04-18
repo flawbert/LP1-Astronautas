@@ -1,5 +1,5 @@
 // Falta para fazer:
-// Corrigir case 9 e corrigir disponibilidade do passageiro ao finalizar voo, pois seta como indisponivel
+// Acessar a lista de histórico de voos no case 9 e corrigir disponibilidade do astonata ao finalizar os voos
 
 #include <iostream>
 #include <list>
