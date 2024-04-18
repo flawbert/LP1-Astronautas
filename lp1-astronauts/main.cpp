@@ -1,6 +1,5 @@
 // Falta para fazer:
-// Corrigir case 9 e set de disponibilidade quando finaliza voo
-// Adicionar destino aos voos
+// Corrigir case 9 e corrigir disponibilidade do passageiro ao finalizar voo, pois seta como indisponivel
 
 #include <iostream>
 #include <list>
@@ -53,12 +52,16 @@ public:
         return dispo;
     }
 
-    void setStatus(astroStatus novoStatus) {
-        status = novoStatus;
+    void mataAstro() {
+        status = MORTO;
     }
 
-    void setDisponibilidade(bool disponivel) {
-        dispo = disponivel;
+    void setDisponivel() {
+        dispo = true;
+    }
+
+    void setIndisponivel() {
+        dispo = false;
     }
 
     void adicionarVoo(int codigoVoo) {
@@ -123,7 +126,7 @@ public:
             status = DESTRUIDO;
             cout << "O Voo de codigo " << codigoVoo << " foi explodido." << endl; 
             for (auto& astronauta : passageiros) {
-                astronauta.setStatus(MORTO);
+                astronauta.mataAstro();
                 cout << "O astronauta " << astronauta.getNome() << " morreu..." << endl;
             } 
         }
@@ -160,7 +163,8 @@ public:
 
         // Marcar todos os passageiros como disponíveis novamente
         for (auto& passageiro : passageiros) {
-            passageiro.setDisponibilidade(true);
+            passageiro.setDisponivel();
+            cout << passageiro.getNome() << " ja esta disponivel para outro voo" << endl;
         }
 
         // Limpar a lista de passageiros, já que o voo foi finalizado
@@ -330,7 +334,7 @@ int main(void) {
                                 if (astronauta.getCPF() == cpfAstronauta && astronauta.getStatus() == VIVO && astronauta.getDisponibilidade()) {
                                     it->adicionarPassageiro(astronauta); // Adicionar passageiro ao voo encontrado
                                     astronauta.adicionarVoo(it->getCodigo());
-                                    astronauta.setDisponibilidade(false);
+                                    astronauta.setIndisponivel();
                                     astroFind = true; // Atualizar astroFind
                                     break;
                                 }
@@ -343,6 +347,9 @@ int main(void) {
                             }
                             if (astroFind) {
                                 cout << endl << "Astronauta adicionado ao voo com sucesso!" << endl << endl;
+                            }
+                            else {
+                                cout << "Astronauta nao localizado" << endl;
                             }
                         }
                         break; // Sair do loop de voos
@@ -403,7 +410,7 @@ int main(void) {
                             // Atualizar o histórico de voos do passageiro 
                             for (auto& astronauta : astronautas) {
                                 if (astronauta.getCPF() == cpfPassageiro) {
-                                    astronauta.setDisponibilidade(true); 
+                                    astronauta.setDisponivel(); 
                                     auto& historico = astronauta.getHistoricoVoos(); // Obtém uma referência constante ao histórico de voos
                                     list<int> historicoModificado = historico; // Faz uma cópia do histórico de voos
                                     historicoModificado.remove(cod); // Remove o código do voo da cópia
@@ -459,8 +466,8 @@ int main(void) {
 
                         cout << "   Destino do voo: " << voo.getDestino() << endl; // informa o destino do voo
 
-                        cout << "   Passageiros do Voo:" << endl;
                         voo.visualizarPassageiros(astronautas);
+
                         cout << endl;
                     }    
                 }
@@ -494,7 +501,7 @@ int main(void) {
                     }
                     else if (it->getCodigo() == cod && it->getStatus() == EMVOO) {
                         cout << "O voo ja foi lancado." << endl;
-                        cout << "Ele esta a caminho de " << it->getDestino() << endl;
+                        cout << "Ele esta a caminho de  " << it->getDestino() << endl;
                         break;
                     }
                     else if (it->getCodigo() == cod && it->getStatus() == DESTRUIDO) {
@@ -523,7 +530,7 @@ int main(void) {
 
 
                 int cod;
-                cout << "Digite o codigo do voo a ser finalizado: " << endl;
+                cout << "Digite o codigo do voo a ser finalizado: ";
                 cin >> cod;
 
                 bool encontrado = false;
