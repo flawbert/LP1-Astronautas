@@ -420,12 +420,10 @@ int main(void) {
                         cout << endl;
                     }
                 }
-
                 cout << endl;
 
                 break;
             }
-
             case 9: {
                 // Menções Honrosas para os astronautas tiveram os status alterados para mortos
                 
